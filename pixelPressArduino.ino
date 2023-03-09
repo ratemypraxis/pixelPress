@@ -2,12 +2,15 @@
 #include <Bounce2.h>
 
 // Define the number of LEDs in the strip and the data pin
-#define NUM_LEDS 10
+#define NUM_LEDS 125
 #define DATA_PIN 2
 
-// Variables will change:
-int buttonPin = 14;
-int buttonPress = 0;
+int button1Pin = 3;
+int button2Pin = 4;
+
+int button1Press = 0;
+int button2Press = 0;
+
 
 
 unsigned long lastDebounceTime = 0;  // the last time the output pin was toggled
@@ -18,14 +21,14 @@ unsigned long debounceDelay = 50;    // the debounce time; increase if the outpu
 CRGB leds[NUM_LEDS];
 
 
-int h = 0;
-int s = 0;
-int v = 255;
-int b1;
-int b2;
+int h;
+int s;
+int v;
 
 
-Bounce bouncer = Bounce(buttonPin, 20);
+Bounce bouncer1 = Bounce(button1Pin, 20);
+Bounce bouncer2 = Bounce(button2Pin, 20);
+
 
 void setup() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -33,96 +36,100 @@ void setup() {
 
 
 void loop() {
- int b;
-//  btnCount(h, s, v);
 
+  // 0,0 -- button1
+  if (bouncer1.update() && bouncer1.read() == HIGH) {
 
-  // for (int i = 0; i < 2; i++) {
-  //   leds[i] = CHSV(h, s, v);
-  //     FastLED.show();
-
-  // }
-
-  // for (int i = 2; i < 4; i++) {
-  //   leds[i] = CHSV(0, 0, 0);
-  //     FastLED.clear();
-
-  // }
-
-  //   for (int i = 4; i < 8; i++) {
-  //   leds[i] = CHSV(h, s, v);
-  //     FastLED.show();
-
-  // }
-  // Show the updated colors on the LED strip
-  //FastLED.show();
-
-  // Delay for a short amount of time to avoid overwhelming the processor
-  delay(10);
-
-
-// void btnCount{
-  if (bouncer.update() && bouncer.read() == HIGH) {
-
-    if (buttonPress == 0) {
+    if (button1Press == 0) {
       h = 0;
       s = 255;
       v = 255;
       Serial.println("red");
-      buttonPress++;
-
-
-
-    } else if (buttonPress == 1) {
+      button1Press++;
+    } else if (button1Press == 1) {
       h = 100;
       s = 255;
       v = 255;
-      buttonPress++;
-
+      button1Press++;
       Serial.println("green");
-
-    } else if (buttonPress == 2) {
-
+    } else if (button1Press == 2) {
       h = 160;
       s = 255;
       v = 255;
-      buttonPress++;
-
+      button1Press++;
       Serial.println("blue");
-
-    } else if (buttonPress == 3) {
-
+    } else if (button1Press == 3) {
       h = 0;
       s = 0;
       v = 0;
       Serial.println("off");
-      buttonPress++;
-
-    } else if (buttonPress == 4) {
-
+      button1Press++;
+    } else if (button1Press == 4) {
       h = 0;
       s = 0;
       v = 255;
       Serial.println("white");
-      buttonPress = 0;
+      button1Press = 0;
     }
-
-      for (int i = 0; i < 2; i++) {
-    leds[i] = CHSV(h, s, v);
+    for (int i = 0; i <= 4; i++) {
+      
+      leds[i] = CHSV(h, s, v);
+FastLED.show();
+      delay(10);
+    }
+    for (int i = 42; i <= 46; i++) {
+      leds[i] = CHSV(h, s, v);
       FastLED.show();
-
+      delay(10);
+    }
   }
 
-  // for (int i = 2; i < 4; i++) {
-  //   leds[i] = CHSV(0, 0, 0);
-  //     FastLED.clear();
+  // 0,1 -- button2
+  if (bouncer2.update() && bouncer2.read() == HIGH) {
 
-  // }
-
-    for (int i = 4; i < 8; i++) {
-    leds[i] = CHSV(h, s, v);
+    if (button2Press == 0) {
+      h = 0;
+      s = 255;
+      v = 255;
+      Serial.println("red");
+      button2Press++;
+    } else if (button2Press == 1) {
+      h = 100;
+      s = 255;
+      v = 255;
+      button2Press++;
+      Serial.println("green");
+    } else if (button2Press == 2) {
+      h = 160;
+      s = 255;
+      v = 255;
+      button2Press++;
+      Serial.println("blue");
+    } else if (button2Press == 3) {
+      h = 0;
+      s = 0;
+      v = 0;
+      Serial.println("off");
+      button2Press++;
+    } else if (button2Press == 4) {
+      h = 0;
+      s = 0;
+      v = 255;
+      Serial.println("white");
+      button2Press = 0;
+    }
+    for (int i = 5; i <= 10; i++) {
+      leds[i] = CHSV(h, s, v);
       FastLED.show();
-
-  
+      delay(10);
+    }
+    for (int i = 35; i <= 40; i++) {
+      leds[i] = CHSV(h, s, v);
+      FastLED.show();
+      delay(10);
+    }
   }
-}}
+
+        // FastLED.clear();
+
+}
