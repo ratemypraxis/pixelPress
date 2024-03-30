@@ -10,3 +10,4 @@
 - Laser cut Acrylic & wood
 - C++
 
+![plan](https://brightspace.nyu.edu/d2l/le/259867/discussions/posts/1586873/ViewAttachment?fileId=16396495)
